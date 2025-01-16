@@ -18,4 +18,9 @@ jenkins-agent:
 prometheus:
 	docker run -d --name prometheus --network jenkins-network -p 9090:9090 -v $(pwd)/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
 
-.PHONY: docker-network jenkins-master jenkins-agent-build jenkins-agent prometheus
+# Start Grafana
+grafana:
+	docker run -d --name=grafana --network=jenkins-network -p 3000:3000 grafana/grafana
+
+.PHONY: docker-network jenkins-master jenkins-agent-build jenkins-agent prometheus grafana
+

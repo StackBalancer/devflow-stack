@@ -71,3 +71,13 @@ Verify Prometheus Scraping:
 - Navigate to Status → Targets
 
 You should see the Jenkins job metrics under jenkins-master:8080.
+
+# Install Grafana
+- Run Grafana in a Docker Container:
+```bash
+  make grafana
+```
+- Access Grafana in your local browser http://localhost:3000 (admin/admin).
+- Add Prometheus as a Data Source, Settings > Data Sources > Add data source - select Prometheus.
+- Configure the following -> URL: http://prometheus:9090 (replace prometheus with the container name or service name of Prometheus).
+  
