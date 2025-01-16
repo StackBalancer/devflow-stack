@@ -1,27 +1,59 @@
 # devflow-stack
+Project designed to showcase a wide range of DevOps skills. It integrates infrastructure automation, continuous integration (CI), and continuous deployment (CD) practices, demonstrating how modern DevOps tools and methodologies can streamline software development workflows.
 
-# Requirements
+# Tech Stack
+Jenkins
+
 Docker
-make
+
+Make
+
 Prometheus
+
 Grafana
+
 Python
 
+# Create Docker network bridge
+```bash
+  make docker-network
+```
+
 # Install Jenkins
-1. Run the Jenkins container:
-docker run -d --name=jenkins -p 8080:8080 -p 50000:50000 -v ~/jenkins_home:/var/jenkins_home jenkins/jenkins:lts
-2. Access Jenkins at http://localhost:8080.
-3. Get initial Jenkins password
-find Jenkins running container:
-JENKINS_CONTAINER_ID=$(docker ps -a --filter "ancestor=jenkins/jenkins:lts" --format "{{.ID}}")
-docker exec -it <JENKINS_CONTAINER_ID> /bin/bash -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+1. Run Jenkins instance:
+```bash
+  make jenkins-master
+```
 
-2. Configure Prometheus for Jenkins
-Install the Prometheus Metrics Plugin in Jenkins:
+1. Access Jenkins at http://localhost:8080 in your web browser
 
-Go to Manage Jenkins > Manage Plugins > Available.
-Search for and install the Prometheus Metrics Plugin.
+2. Get Jenkins password and use it for initial login:
+
+```bash
+  JENKINS_CONTAINER_ID=$(docker ps -a --filter "ancestor=jenkins/jenkins:lts" --format "{{.ID}}")
+  docker exec -it <JENKINS_CONTAINER_ID> /bin/bash -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+```
+
+4. Jenkins agent
+- Configure jenkins agent node - https://hub.docker.com/r/jenkins/inbound-agent
+- Build custom Docker container with Python installed:
+```bash
+  make jenkins-agent-build
+```
+- Run agent container (replace \<secret-id\> in Makefile with one displayed in status window)
+```bash
+  make jenkins-agent
+```
+
+# Install Prometheus
+Configure Prometheus for Jenkins:
+
+- Go to Manage Jenkins > Manage Plugins > Available plugins
+
+- Search for and install the Prometheus Metrics Plugin.
+
 Configure the plugin:
 
-Go to Manage Jenkins > Configure System.
-Enable the Prometheus metrics endpoint (e.g., http://localhost:8080/prometheus).
+- Go to Manage Jenkins > Configure System
+
+- Enable the Prometheus metrics endpoint (e.g., http://localhost:8080/prometheus).

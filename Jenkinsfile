@@ -1,8 +1,5 @@
 pipeline {
-    agent any
-    tools {
-        jenkins.plugins.shiningpanda.tools.PythonInstallation
-    }
+    agent { label 'jenkins-agent' }
     stages {
         stage('Build') {
             steps {
