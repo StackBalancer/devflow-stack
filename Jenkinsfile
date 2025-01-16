@@ -4,21 +4,21 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'python3 pipeline_script.py build'
+                    sh 'python3 build.py build'
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    sh 'python3 pipeline_script.py test'
+                    sh 'python3 build.py test'
                 }
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    sh 'python3 pipeline_script.py deploy'
+                    sh 'python3 build.py deploy'
                 }
             }
         }
