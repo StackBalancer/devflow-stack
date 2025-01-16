@@ -46,6 +46,13 @@ Python
 ```
 
 # Install Prometheus
+Run Prometheus container:
+```bash
+  make prometheus
+```
+
+## Expose Jenkins Metrics with the Prometheus plugin
+
 Configure Prometheus for Jenkins:
 
 - Go to Manage Jenkins > Manage Plugins > Available plugins
@@ -56,4 +63,11 @@ Configure the plugin:
 
 - Go to Manage Jenkins > Configure System
 
-- Enable the Prometheus metrics endpoint (e.g., http://localhost:8080/prometheus).
+- Enable the Prometheus metrics endpoint in Jenkins (e.g. http://localhost:8080/prometheus).
+
+Verify Prometheus Scraping:
+
+- Open Prometheus at http://localhost:9090
+- Navigate to Status → Targets
+
+You should see the Jenkins job metrics under jenkins-master:8080.

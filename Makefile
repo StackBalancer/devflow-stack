@@ -14,4 +14,8 @@ jenkins-agent-build:
 jenkins-agent:
 	docker run -d --name jenkins-agent --network jenkins-network -e JENKINS_URL=http://jenkins-master:8080 -e JENKINS_AGENT_NAME=jenkins-agent -e JENKINS_SECRET=<secret-id> jenkins-agent
 
-.PHONY: docker-network jenkins-master jenkins-agent-build jenkins-agent
+# Start Prometheus
+prometheus:
+	docker run -d --name prometheus --network jenkins-network -p 9090:9090 -v $(pwd)/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+
+.PHONY: docker-network jenkins-master jenkins-agent-build jenkins-agent prometheus
